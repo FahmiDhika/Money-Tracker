@@ -16,10 +16,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const viewport = {
-  themeColor: "#047857",
-};
-
 export const metadata: Metadata = {
   title: "Money Tracker",
   description: "Build & Develop by Fahmi and AI Assistant",
