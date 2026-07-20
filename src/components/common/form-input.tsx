@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 type BaseProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
@@ -37,6 +39,9 @@ export function FormInput<TFieldValues extends FieldValues>(
 ) {
   const { form, name, label, description, placeholder, disabled, className } =
     props;
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPasswordField = !props.multiline && props.type === "password";
 
   return (
     <Controller
@@ -55,6 +60,30 @@ export function FormInput<TFieldValues extends FieldValues>(
               rows={props.rows ?? 4}
               aria-invalid={fieldState.invalid}
             />
+          ) : isPasswordField ? (
+            <div className="relative">
+              <Input
+                {...field}
+                id={field.name}
+                type={showPassword ? "text" : "password"}
+                placeholder={placeholder}
+                disabled={disabled}
+                aria-invalid={fieldState.invalid}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                tabIndex={-1}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           ) : (
             <Input
               {...field}
