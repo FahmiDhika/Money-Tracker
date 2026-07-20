@@ -18,6 +18,7 @@ import {
   type LucideIcon,
   LineChart,
   Vault,
+  Receipt,
 } from "lucide-react";
 
 export type IconConfig = {
@@ -93,6 +94,12 @@ const CATEGORY_ICONS: Record<string, IconConfig> = {
     bg: "bg-slate-100",
     text: "text-slate-600",
     solid: "bg-slate-500",
+  },
+  "Biaya Admin": {
+    icon: Receipt,
+    bg: "bg-neutral-100",
+    text: "text-neutral-600",
+    solid: "bg-neutral-500",
   },
 };
 
