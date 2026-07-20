@@ -13,7 +13,8 @@ export async function searchTransactions(query: string) {
     .or(
       `category.ilike.%${query}%,note.ilike.%${query}%,payment_method.ilike.%${query}%`,
     )
-    .order("transaction_date", { ascending: false });
+    .order("transaction_date", { ascending: false })
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error(error);

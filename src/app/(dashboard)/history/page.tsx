@@ -38,7 +38,8 @@ export default async function HistoryPage({ searchParams }: HistoryPageProps) {
     .select("*")
     .gte("transaction_date", toDateString(range.start))
     .lte("transaction_date", toDateString(range.end))
-    .order("transaction_date", { ascending: false });
+    .order("transaction_date", { ascending: false })
+    .order("created_at", { ascending: false });
 
   const inflow =
     transactions
