@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Eye, EyeOff } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { useState } from "react";
 
 type SummaryCardProps = {
   inflow: number;
@@ -18,6 +21,7 @@ export function SummaryCard({
   rangeEnd,
 }: SummaryCardProps) {
   const total = inflow - outflow;
+  const [hidden, setHidden] = useState(true);
 
   return (
     <div className="rounded-2xl bg-linear-to-br from-emerald-700 to-emerald-500 p-5 text-white shadow-sm">
@@ -25,7 +29,19 @@ export function SummaryCard({
       <p
         className={`mb-4 text-2xl font-bold ${total < 0 ? "text-red-100" : "text-white"}`}
       >
-        {formatCurrency(total)}
+        <div className="flex gap-2">
+          {hidden ? "••••••••" : formatCurrency(total)}
+          <button
+            onClick={() => setHidden((h) => !h)}
+            className="text-emerald-100 hover:text-white"
+          >
+            {hidden ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </p>
 
       <div className="grid grid-cols-2 gap-3">

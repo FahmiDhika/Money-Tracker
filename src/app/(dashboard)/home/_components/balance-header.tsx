@@ -5,7 +5,7 @@ import { Eye, EyeOff, Wallet } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 export function BalanceHeader({ balance }: { balance: number }) {
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(true);
 
   return (
     <div className="rounded-2xl bg-linear-to-br from-emerald-700 to-emerald-500 p-5 text-white shadow-sm">
