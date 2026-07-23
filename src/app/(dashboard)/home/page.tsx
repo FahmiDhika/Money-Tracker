@@ -5,6 +5,7 @@ import { WalletsCard } from "./_components/wallets-card";
 import { ReportCard } from "./_components/report-card";
 import { TopSpendingCard } from "./_components/top-spending-card";
 import { RecentTransactions } from "./_components/recent-transactions";
+import { ReminderBanner } from "./_components/reminder-banner-loader";
 
 export const metadata = { title: "Money Tracker | Home" };
 
@@ -66,6 +67,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     .filter((t) => t.type === "expense")
     .reduce((s, t) => s + Number(t.amount), 0);
 
+  const todayStr = toDateString(new Date());
+  const hasTransactionToday = thisPeriodItems.some(
+    (t) => t.transaction_date === todayStr,
+  );
+
   const { data: recentTransactions } = await supabase
     .from("transactions")
     .select("*")
@@ -75,6 +81,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <div className="space-y-5">
+      <ReminderBanner show={!hasTransactionToday} todayStr={todayStr} />
       <BalanceHeader balance={totalBalance} />
       <WalletsCard wallets={wallets} />
       <ReportCard
