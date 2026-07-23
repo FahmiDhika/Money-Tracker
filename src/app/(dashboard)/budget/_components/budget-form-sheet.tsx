@@ -33,6 +33,7 @@ const EXPENSE_CATEGORIES = [
   "Jajan",
   "Makan",
   "Ngopi",
+  "Game",
   "Transportasi",
   "Servis",
   "Biaya Admin",
