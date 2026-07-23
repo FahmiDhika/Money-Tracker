@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import createClient from "@/lib/supabase/client";
 import { TransactionForm } from "@/validations/transaction-validation";
 
@@ -66,22 +66,33 @@ export function TagInput({ form }: { form: UseFormReturn<TransactionForm> }) {
               </div>
             )}
 
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === ",") {
-                  e.preventDefault();
-                  addTag(inputValue);
-                }
-                if (e.key === "Backspace" && !inputValue && tags.length > 0) {
-                  removeTag(tags[tags.length - 1]);
-                }
-              }}
-              placeholder="Type a tag and press Enter"
-              className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm outline-none focus:border-emerald-700"
-            />
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                enterKeyHint="done"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    addTag(inputValue);
+                  }
+                  if (e.key === "Backspace" && !inputValue && tags.length > 0) {
+                    removeTag(tags[tags.length - 1]);
+                  }
+                }}
+                placeholder="Type a tag"
+                className="w-full rounded-md border border-stone-200 px-3 py-2 text-sm outline-none focus:border-emerald-700"
+              />
+              <button
+                type="button"
+                onClick={() => addTag(inputValue)}
+                disabled={!inputValue.trim()}
+                className="flex shrink-0 items-center justify-center rounded-md border border-emerald-700 bg-emerald-700 px-3 text-white disabled:cursor-not-allowed disabled:border-stone-200 disabled:bg-stone-100 disabled:text-stone-400"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
 
             {filteredSuggestions.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
