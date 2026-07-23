@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getPeriodRange, toDateString } from "@/lib/period";
 import { getBudgetStatus } from "@/lib/budget";
 import { BudgetSection } from "./_components/budget-section";
+import { SavingsSection } from "./_components/savings-section";
 
 export const metadata = { title: "Money Tracker | Budget" };
 
@@ -53,11 +54,57 @@ export default async function BudgetPage() {
     monthTransactions ?? [],
   );
 
+  const { data: goals } = await supabase
+    .from("savings_goals")
+    .select("*")
+    .order("created_at", { ascending: true });
+    
+  const { data: contributions } = await supabase
+    .from("savings_contributions")
+    .select("id, goal_id, amount, note, contributed_at")
+    .order("contributed_at", { ascending: false });
+
+  const goalsWithProgress = (goals ?? []).map((g) => {
+    const goalContributions = (contributions ?? []).filter(
+      (c) => c.goal_id === g.id,
+    );
+    const saved = goalContributions.reduce(
+      (sum, c) => sum + Number(c.amount),
+      0,
+    );
+    const percentage = Math.round((saved / Number(g.target_amount)) * 100);
+
+    return {
+      id: g.id,
+      name: g.name,
+      target_amount: Number(g.target_amount),
+      saved,
+      percentage,
+      contributions: goalContributions.map((c) => ({
+        id: c.id,
+        amount: Number(c.amount),
+        note: c.note as string | null,
+        contributed_at: c.contributed_at as string,
+      })),
+    };
+  });
+
+  
+
   return (
     <div className="space-y-6">
       <h1 className="text-xl font-semibold text-stone-900">Budget</h1>
-      <BudgetSection title="This Week" periodType="week" budgets={weekBudgets} />
-      <BudgetSection title="This Month" periodType="month" budgets={monthBudgets} />
+      <SavingsSection goals={goalsWithProgress} />
+      <BudgetSection
+        title="This Week"
+        periodType="week"
+        budgets={weekBudgets}
+      />
+      <BudgetSection
+        title="This Month"
+        periodType="month"
+        budgets={monthBudgets}
+      />
     </div>
   );
 }

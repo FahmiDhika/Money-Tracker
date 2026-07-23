@@ -4,14 +4,7 @@ import { useState } from "react";
 import { Wallet } from "lucide-react";
 import { getCategoryIcon } from "@/components/common/transaction/category-icons";
 import { BudgetFormSheet } from "./budget-form-sheet";
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
+import { formatCurrency } from "@/lib/utils";
 
 type BudgetItemProps = {
   budget: {
