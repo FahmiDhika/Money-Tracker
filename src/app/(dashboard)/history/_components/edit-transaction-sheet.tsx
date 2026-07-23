@@ -57,6 +57,7 @@ export function EditTransactionSheet({
       payment_method: transaction.payment_method,
       note: transaction.note ?? "",
       transaction_date: transaction.transaction_date,
+      tags: transaction.tags ?? [],
     },
   });
 
