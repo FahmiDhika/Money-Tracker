@@ -8,6 +8,7 @@ import { RecentTransactions } from "./_components/recent-transactions";
 import { ReminderBanner } from "./_components/reminder-banner-loader";
 import { getBudgetStatus } from "@/lib/budget";
 import { BudgetWarningBanner } from "./_components/budget-warning-banner";
+import { SpendingHeatmap } from "./_components/spending-heatmap";
 
 export const metadata = { title: "Money Tracker | Home" };
 
@@ -127,6 +128,27 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     status: "warning" | "over";
   }[];
 
+  const heatmapStart = new Date();
+  heatmapStart.setDate(heatmapStart.getDate() - 90);
+
+  const { data: heatmapTransactions } = await supabase
+    .from("transactions")
+    .select("type, amount, transaction_date")
+    .gte("transaction_date", toDateString(heatmapStart));
+
+  const heatmapMap = new Map<string, number>();
+  (heatmapTransactions ?? []).forEach((t) => {
+    const current = heatmapMap.get(t.transaction_date) ?? 0;
+    heatmapMap.set(
+      t.transaction_date,
+      current + (t.type === "income" ? Number(t.amount) : -Number(t.amount)),
+    );
+  });
+  const heatmapDays = Array.from(heatmapMap.entries()).map(([date, net]) => ({
+    date,
+    net,
+  }));
+
   return (
     <div className="space-y-5">
       <BudgetWarningBanner warnings={budgetWarnings} />
@@ -141,6 +163,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       />
       <TopSpendingCard range={range} items={thisPeriodItems} />
       <RecentTransactions transactions={recentTransactions ?? []} />
+      <SpendingHeatmap days={heatmapDays} />
     </div>
   );
 }
