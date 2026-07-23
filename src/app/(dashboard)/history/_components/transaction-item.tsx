@@ -33,6 +33,18 @@ export function TransactionItem({ transaction }: { transaction: Transaction }) {
           <p className="text-xs text-stone-500">
             {transaction.payment_method}
             {transaction.note ? ` · ${transaction.note}` : ""}
+            {transaction.tags && transaction.tags.length > 0 && (
+              <div className="mt-1 flex flex-wrap gap-1">
+                {transaction.tags.map((tag: string) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] text-stone-500"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </p>
         </div>
 

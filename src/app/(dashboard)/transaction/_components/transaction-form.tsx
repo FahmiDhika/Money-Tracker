@@ -37,6 +37,10 @@ export function TransactionForm() {
   const handleSubmit = form.handleSubmit((data) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
+      if (key === "tags" && Array.isArray(value)) {
+        value.forEach((tag) => formData.append("tags", tag));
+        return;
+      }
       formData.append(key, String(value ?? ""));
     });
 

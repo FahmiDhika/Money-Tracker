@@ -21,6 +21,10 @@ export const transactionSchema = z.object({
     .max(30, { message: "Payment method is too long." }),
   note: z.string().max(255, { message: "Note is too long." }).optional(),
   transaction_date: z.string().min(1, { message: "Date is required." }),
+  tags: z
+    .array(z.string().min(1).max(30))
+    .max(10, { message: "Maximum 10 tags." })
+    .optional(),
 });
 
 export type TransactionForm = z.infer<typeof transactionSchema>;

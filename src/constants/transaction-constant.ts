@@ -8,6 +8,7 @@ export const INITIAL_TRANSACTION_FORM: TransactionForm = {
   payment_method: "",
   note: "",
   transaction_date: new Date().toISOString().split("T")[0],
+  tags: [],
 };
 
 export const INITIAL_STATE_TRANSACTION_FORM: TransactionFormState = {

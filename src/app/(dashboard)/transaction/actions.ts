@@ -21,6 +21,7 @@ export async function createTransaction(
     payment_method: formData.get("payment_method"),
     note: formData.get("note") || undefined,
     transaction_date: formData.get("transaction_date"),
+    tags: formData.getAll("tags"),
   });
 
   if (!validatedFields.success) {
@@ -53,6 +54,7 @@ export async function createTransaction(
     payment_method: validatedFields.data.payment_method,
     note: validatedFields.data.note || null,
     transaction_date: validatedFields.data.transaction_date,
+    tags: validatedFields.data.tags ?? [],
   });
 
   if (error) {
@@ -88,6 +90,7 @@ export async function updateTransaction(
     payment_method: formData.get("payment_method"),
     note: formData.get("note") || undefined,
     transaction_date: formData.get("transaction_date"),
+    tags: formData.getAll("tags"),
   });
 
   if (!validatedFields.success) {
@@ -108,6 +111,7 @@ export async function updateTransaction(
       payment_method: validatedFields.data.payment_method,
       note: validatedFields.data.note || null,
       transaction_date: validatedFields.data.transaction_date,
+      tags: validatedFields.data.tags ?? [],
     })
     .eq("id", id);
 

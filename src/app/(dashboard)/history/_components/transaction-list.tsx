@@ -10,6 +10,7 @@ export type Transaction = {
   payment_method: string;
   note: string | null;
   transaction_date: string;
+  tags: string[];
 };
 
 function groupByDate(transactions: Transaction[]) {

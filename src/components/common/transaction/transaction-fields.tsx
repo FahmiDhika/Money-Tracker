@@ -6,6 +6,7 @@ import { TypeToggle } from "./type-toggle";
 import { CategoryPicker } from "./category-picker";
 import { PaymentMethodPicker } from "./payment-method-picker";
 import { TransactionForm } from "@/validations/transaction-validation";
+import { TagInput } from "./tag-input";
 
 export function TransactionFields({
   form,
@@ -25,6 +26,7 @@ export function TransactionFields({
       <CategoryPicker form={form} />
       <PaymentMethodPicker form={form} />
       <FormInput form={form} name="transaction_date" type="date" label="Date" />
+      <TagInput form={form} />
       <FormInput
         form={form}
         name="note"
