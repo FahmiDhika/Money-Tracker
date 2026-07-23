@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { getCategoryIcon } from "@/components/common/transaction/category-icons";
 import { Transaction } from "./transaction-list";
-import { EditTransactionSheet } from "./edit-transaction-list";
+import { EditTransactionSheet } from "./edit-transaction-sheet";
 
 export function TransactionItem({ transaction }: { transaction: Transaction }) {
   const [open, setOpen] = useState(false);
@@ -30,9 +30,12 @@ export function TransactionItem({ transaction }: { transaction: Transaction }) {
           <p className="text-sm font-medium text-stone-900">
             {transaction.category}
           </p>
-          <p className="text-xs text-stone-500">
-            {transaction.payment_method}
-            {transaction.note ? ` · ${transaction.note}` : ""}
+          <div className="text-xs text-stone-500">
+            <p>
+              {transaction.payment_method}
+              {transaction.note ? ` · ${transaction.note}` : ""}
+            </p>
+
             {transaction.tags && transaction.tags.length > 0 && (
               <div className="mt-1 flex flex-wrap gap-1">
                 {transaction.tags.map((tag: string) => (
@@ -45,7 +48,7 @@ export function TransactionItem({ transaction }: { transaction: Transaction }) {
                 ))}
               </div>
             )}
-          </p>
+          </div>
         </div>
 
         <span

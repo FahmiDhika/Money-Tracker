@@ -20,6 +20,7 @@ import {
   INITIAL_STATE_TRANSACTION_FORM,
 } from "@/constants/transaction-constant";
 import { createTransaction } from "../actions";
+import { TagInput } from "@/components/common/transaction/tag-input";
 
 export function TransactionForm() {
   const form = useForm<TransactionFormType>({
@@ -82,6 +83,7 @@ export function TransactionForm() {
       <CategoryPicker form={form} />
       <PaymentMethodPicker form={form} />
       <FormInput form={form} name="transaction_date" type="date" label="Date" />
+      <TagInput form={form} />
       <FormInput
         form={form}
         name="note"
