@@ -6,6 +6,8 @@ import { ReportCard } from "./_components/report-card";
 import { TopSpendingCard } from "./_components/top-spending-card";
 import { RecentTransactions } from "./_components/recent-transactions";
 import { ReminderBanner } from "./_components/reminder-banner-loader";
+import { getBudgetStatus } from "@/lib/budget";
+import { BudgetWarningBanner } from "./_components/budget-warning-banner";
 
 export const metadata = { title: "Money Tracker | Home" };
 
@@ -79,8 +81,55 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     .order("created_at", { ascending: false })
     .limit(5);
 
+  const { data: budgets } = await supabase.from("budgets").select("*");
+
+  const weekRangeForBudget = getPeriodRange("week", 0);
+  const monthRangeForBudget = getPeriodRange("month", 0);
+
+  const { data: weekExpenses } = await supabase
+    .from("transactions")
+    .select("category, amount")
+    .eq("type", "expense")
+    .gte("transaction_date", toDateString(weekRangeForBudget.start))
+    .lte("transaction_date", toDateString(weekRangeForBudget.end));
+
+  const { data: monthExpenses } = await supabase
+    .from("transactions")
+    .select("category, amount")
+    .eq("type", "expense")
+    .gte("transaction_date", toDateString(monthRangeForBudget.start))
+    .lte("transaction_date", toDateString(monthRangeForBudget.end));
+
+  function computeBudgetSpent(
+    category: string | null,
+    items: { category: string; amount: number }[],
+  ) {
+    return items
+      .filter((t) => (category ? t.category === category : true))
+      .reduce((s, t) => s + Number(t.amount), 0);
+  }
+
+  const budgetWarnings = (budgets ?? [])
+    .map((b) => {
+      const items =
+        b.period_type === "week" ? (weekExpenses ?? []) : (monthExpenses ?? []);
+      const spent = computeBudgetSpent(b.category, items);
+      const percentage = Math.round((spent / Number(b.amount)) * 100);
+      return {
+        label: `${b.category ?? "Overall"} (${b.period_type === "week" ? "This Week" : "This Month"})`,
+        percentage,
+        status: getBudgetStatus(percentage),
+      };
+    })
+    .filter((w) => w.status !== "ok") as {
+    label: string;
+    percentage: number;
+    status: "warning" | "over";
+  }[];
+
   return (
     <div className="space-y-5">
+      <BudgetWarningBanner warnings={budgetWarnings} />
       <ReminderBanner show={!hasTransactionToday} todayStr={todayStr} />
       <BalanceHeader balance={totalBalance} />
       <WalletsCard wallets={wallets} />
