@@ -19,6 +19,7 @@ import {
   LineChart,
   Vault,
   Receipt,
+  Gamepad2
 } from "lucide-react";
 
 export type IconConfig = {
@@ -82,6 +83,12 @@ const CATEGORY_ICONS: Record<string, IconConfig> = {
     bg: "bg-yellow-100",
     text: "text-yellow-700",
     solid: "bg-yellow-500",
+  },
+  Game: {
+    icon: Gamepad2,
+    bg: "bg-indigo-100",
+    text: "text-indigo-700",
+    solid: "bg-indigo-500",
   },
   Transportasi: {
     icon: Car,
