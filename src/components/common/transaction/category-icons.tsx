@@ -10,6 +10,7 @@ import {
   Car,
   Wrench,
   ShoppingBag,
+  ShoppingCart,
   Wallet,
   Landmark,
   Smartphone,
@@ -89,6 +90,12 @@ const CATEGORY_ICONS: Record<string, IconConfig> = {
     bg: "bg-indigo-100",
     text: "text-indigo-700",
     solid: "bg-indigo-500",
+  },
+  "Belanja Online": {
+    icon: ShoppingCart,
+    bg: "bg-pink-100",
+    text: "text-pink-600",
+    solid: "bg-pink-500",
   },
   Transportasi: {
     icon: Car,
