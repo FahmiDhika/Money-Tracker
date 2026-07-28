@@ -47,7 +47,7 @@ export function PeriodTypeSelector({
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <Select value={currentType} onValueChange={handleSelect}>
         <SelectTrigger className="w-36 border-stone-200">
           <SelectValue />

@@ -20,7 +20,8 @@ import {
   LineChart,
   Vault,
   Receipt,
-  Gamepad2
+  Gamepad2,
+  Sparkles
 } from "lucide-react";
 
 export type IconConfig = {
@@ -72,6 +73,12 @@ const CATEGORY_ICONS: Record<string, IconConfig> = {
     bg: "bg-orange-100",
     text: "text-orange-600",
     solid: "bg-orange-500",
+  },
+  "Skin & Body Care": {
+    icon: Sparkles,
+    bg: "bg-fuchsia-100",
+    text: "text-fuchsia-600",
+    solid: "bg-fuchsia-500",
   },
   Makan: {
     icon: UtensilsCrossed,
