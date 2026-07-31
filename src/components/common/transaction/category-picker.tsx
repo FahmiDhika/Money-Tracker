@@ -8,7 +8,7 @@ import { TransactionForm } from "@/validations/transaction-validation";
 import { getCategoryIcon } from "./category-icons";
 
 const INCOME_CATEGORIES = ["Uang Saku", "Gaji", "Project", "Tabungan", "Saham"];
-const EXPENSE_CATEGORIES = ["Membership", "Jajan", "Makan", "Ngopi", "Belanja Online", "Skin & Body Care", "Game", "Transportasi", "Servis", "Biaya Admin"];
+const EXPENSE_CATEGORIES = ["Membership", "Jajan", "Makan", "Ngopi", "Belanja Online", "Skin & Body Care", "Entertain", "Game", "Transportasi", "Servis", "Biaya Admin"];
 
 export function CategoryPicker({ form }: { form: UseFormReturn<TransactionForm> }) {
   const type = form.watch("type");

@@ -35,6 +35,7 @@ const EXPENSE_CATEGORIES = [
   "Ngopi",
   "Belanja Online",
   "Skin & Body Care",
+  "Entertain",
   "Game",
   "Transportasi",
   "Servis",

@@ -21,7 +21,8 @@ import {
   Vault,
   Receipt,
   Gamepad2,
-  Sparkles
+  Sparkles,
+  Clapperboard
 } from "lucide-react";
 
 export type IconConfig = {
@@ -79,6 +80,12 @@ const CATEGORY_ICONS: Record<string, IconConfig> = {
     bg: "bg-fuchsia-100",
     text: "text-fuchsia-600",
     solid: "bg-fuchsia-500",
+  },
+  Entertain: {
+    icon: Clapperboard,
+    bg: "bg-violet-100",
+    text: "text-violet-600",
+    solid: "bg-violet-500",
   },
   Makan: {
     icon: UtensilsCrossed,
