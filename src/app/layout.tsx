@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -16,9 +17,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport = {
+  themeColor: "#047857",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "Money Tracker",
-  description: "Build & Develop by Fahmi and AI Assistant",
+  description: "Personal income and expense tracker",
 };
 
 export default function RootLayout({
@@ -40,6 +47,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
+        <ServiceWorkerRegister />
         <Toaster position="top-right" />
       </body>
     </html>
